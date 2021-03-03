@@ -1,0 +1,59 @@
+name: beunique
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.0
+  provider: 4.3.2
+  dio: 3.0.3
+  cached_network_image: ^2.0.0
+  responsive_widgets: ^2.0.1
+  auto_size_text: ^2.1.0
+  fluttertoast: ^7.1.6
+  carousel_slider: ^3.0.0
+  flutter_svg: 0.19.0
+  geolocator: "^5.0.0"
+  connectivity_wrapper: ^1.0.4
+  chewie: ^0.12.2
+  video_player: ^1.0.1
+dev_dependencies:
+  flutter_native_splash: ^0.2.9
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.7.4
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path_android: "assets/images/icon.png"
+  image_path_ios: "assets/images/icon.png"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/logo.png
+  android_fullscreen: true
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/images/interests/
+  fonts:
+    - family: helvetica
+      fonts:
+        - asset: assets/fonts/HelveticaNeueMed.ttf
+        - asset: assets/fonts/Helvetica-Neu-Bold.ttf
+          weight: 500
+        - asset: assets/fonts/HelveticaNeue-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/HelveticaNeue-Medium.ttf
+          weight: 300
