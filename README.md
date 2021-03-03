@@ -1,16 +1,18 @@
-# beunique
+beunique
+State management: provider Design pattern: MVVM
 
-A new Flutter project.
+Native splash screen and app logo added
 
-## Getting Started
+All the data filled from the API
 
-This project is a starting point for a Flutter application.
+The location is detected using the longitude and the latitude
 
-A few resources to get you started if this is your first Flutter project:
+all expected error will be handled automatically (null data, empty list, network connection error, server error..)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+All media will be added to cach automatically to reduce the loading time
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+API integrated to run operations ob big lists in short time to provide high performance
+
+App tested successfully on iOS and Android
+
+All views are responsible on all screens sizes(mobile and Tablet)
