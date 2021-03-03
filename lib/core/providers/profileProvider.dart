@@ -77,41 +77,26 @@ class ProfileProvider extends ChangeNotifier {
           child: CachedNetworkImage(
             imageUrl: item.filename,
             fit: BoxFit.cover,
-            placeholder: (context, url) => CircularProgressIndicator(),
+            placeholder: (context, url) => Container(
+                margin: EdgeInsets.all(50),
+                width: 24,
+                height: 23,
+                child: CircularProgressIndicator()),
             errorWidget: (context, url, error) => new Icon(Icons.error),
           ),
         );
       } else {
-        return VideoItems(
-          videoPlayerController: VideoPlayerController.asset(
-            item.video,
+        return ContainerResponsive(
+          width: 414,
+          height: 523,
+          child: VideoItems(
+            videoPlayerController: VideoPlayerController.network(
+              item.video,
+            ),
+            looping: true,
+            autoplay: true,
           ),
-          looping: true,
-          autoplay: true,
         );
-        //if the media file is a vedio then set video widget
-
-        // this the video widget controller
-        VideoPlayerController controller;
-        //set the url to the controller
-        controller = VideoPlayerController.network(item.video)
-          ..initialize().then((_) {
-            // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-            controller.play();
-            notifyListeners();
-            return GestureDetector(
-              onTap: () {
-                controller.value.isPlaying
-                    ? controller.pause()
-                    : controller.play();
-                notifyListeners();
-              },
-              child: AspectRatio(
-                child: VideoPlayer(controller),
-                aspectRatio: controller.value.aspectRatio,
-              ),
-            );
-          });
       }
     }).toList();
     imageSliders.toSet().toList();

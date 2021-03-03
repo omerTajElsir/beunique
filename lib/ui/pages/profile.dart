@@ -23,6 +23,10 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     //set the url to the controller
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // get the interests from the provider
+      Provider.of<ProfileProvider>(context, listen: false).getData(context);
+    });
   }
 
   @override
@@ -99,9 +103,12 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                           // to passions screen
-                          IconButton(
-                            icon: Icon(Icons.arrow_back, color: Colors.white),
-                            onPressed: () => Navigator.pop(context),
+                          Padding(
+                            padding: const EdgeInsets.all(28.0),
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back, color: Colors.white),
+                              onPressed: () => Navigator.pop(context),
+                            ),
                           ),
                           //fav button
                           Positioned(
@@ -176,7 +183,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           //header indicator
                           Provider.of<ProfileProvider>(context, listen: false)
-                                          .imageSliders ==
+                                          .imageSliders !=
                                       null &&
                                   Provider.of<ProfileProvider>(context,
                                           listen: false)
@@ -191,7 +198,7 @@ class _ProfileState extends State<Profile> {
                                                   .imageSliders
                                                   .length))
                                       .w,
-                                  bottom: (33).h,
+                                  bottom: (68).h,
                                   child: Consumer<ProfileProvider>(
                                       builder: (context, provider, child) {
                                     List<String> myList = provider.myHeaderList;
@@ -232,9 +239,13 @@ class _ProfileState extends State<Profile> {
                         child: Stack(
                           children: [
                             // to passions screen
-                            IconButton(
-                              icon: Icon(Icons.arrow_back, color: Colors.white),
-                              onPressed: () => Navigator.pop(context),
+                            Padding(
+                              padding: const EdgeInsets.all(28.0),
+                              child: IconButton(
+                                icon:
+                                    Icon(Icons.arrow_back, color: Colors.white),
+                                onPressed: () => Navigator.pop(context),
+                              ),
                             ),
                             Center(child: CircularProgressIndicator()),
                           ],

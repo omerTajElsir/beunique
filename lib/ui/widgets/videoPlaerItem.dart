@@ -26,7 +26,7 @@ class _VideoItemsState extends State<VideoItems> {
     super.initState();
     _chewieController = ChewieController(
       videoPlayerController: widget.videoPlayerController,
-      aspectRatio: 5 / 8,
+      aspectRatio: 714 / 723,
       autoInitialize: true,
       autoPlay: widget.autoplay,
       looping: widget.looping,
@@ -49,11 +49,8 @@ class _VideoItemsState extends State<VideoItems> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Chewie(
-        controller: _chewieController,
-      ),
+    return Chewie(
+      controller: _chewieController,
     );
   }
 }
