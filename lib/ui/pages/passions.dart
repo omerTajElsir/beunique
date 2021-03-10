@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:beunique/providers/passionsProvider.dart';
 import 'package:beunique/ui/pages/profile.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 
@@ -14,6 +16,7 @@ class Passions extends StatefulWidget {
 class _PassionsState extends State<Passions> with TickerProviderStateMixin {
   //scroll bar controller
   ScrollController _scrollController;
+  int selecCount=0;
   @override
   void initState() {
     super.initState();
@@ -40,6 +43,7 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
       width: 414,
       allowFontScaling: true,
       child: Scaffold(
+
         body: ConnectivityWidgetWrapper(
           child: ContainerResponsive(
             decoration: BoxDecoration(
@@ -154,41 +158,41 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
                                           // keep the spaces and the sizes as in the XD
                                           return
                                             index == 0 || index == 11 + 1 || index == 23 + 1
-                                                ? interest(myInterest.name, 10.0, 40.0, 100, index) : index == 1 ||
+                                                ? interest(myInterest.name, 10.0, 40.0, 100, index,myInterest.img) : index == 1 ||
                                                 index == 11 + 2 || index == 23 + 2
 
-                                                ? interest(myInterest.name, 20.0, 150.0, 120, index)
+                                                ? interest(myInterest.name, 20.0, 150.0, 120, index,myInterest.img)
                                                 : index == 2 || index == 11 + 3 || index == 23 + 3
 
-                                                ? interest(myInterest.name, 0.0, 300.0, 103, index)
+                                                ? interest(myInterest.name, 0.0, 300.0, 103, index,myInterest.img)
                                                 : index == 3 || index == 11 + 4 || index == 23 + 4
 
-                                                ? interest(myInterest.name, 140.0, 70.0, 120, index)
+                                                ? interest(myInterest.name, 140.0, 70.0, 120, index,myInterest.img)
                                                 : index == 4 || index == 11 + 5 || index == 23 + 5
 
-                                                ? interest(myInterest.name, 160.0, 230.0, 110, index)
+                                                ? interest(myInterest.name, 160.0, 230.0, 110, index,myInterest.img)
                                                 : index == 5 || index == 11 + 6 || index == 23 + 6
 
-                                                ? interest(myInterest.name, 130.0, 360.0, 111, index)
+                                                ? interest(myInterest.name, 130.0, 360.0, 111, index,myInterest.img)
                                                 : index == 6 || index == 11 + 7 || index == 23 + 7
 
-                                                ? interest(myInterest.name, 260.0, 30.0,90, index)
+                                                ? interest(myInterest.name, 260.0, 30.0,90, index,myInterest.img)
                                                 : index == 7 || index == 11 + 8 || index == 23 + 8
 
-                                                ? interest(myInterest.name, 280.0, 150.0, 92, index)
+                                                ? interest(myInterest.name, 280.0, 150.0, 92, index,myInterest.img)
                                                 : index == 8 || index == 11 + 9 || index == 23 + 9
 
-                                                ? interest(myInterest.name, 270.0, 320.0, 136, index)
+                                                ? interest(myInterest.name, 270.0, 320.0, 136, index,myInterest.img)
                                                 : index == 9 || index == 11 + 10 || index == 23 + 10
 
-                                                ? interest(myInterest.name, 390.0, 20.0, 140, index)
+                                                ? interest(myInterest.name, 390.0, 20.0, 140, index,myInterest.img)
                                                 : index == 10 || index == 11 + 11 || index == 23 + 11
 
-                                                ? interest(myInterest.name, 380.0, 186.0, 120, index)
+                                                ? interest(myInterest.name, 380.0, 186.0, 120, index,myInterest.img)
                                                 : index == 11 || index == 11 + 12 || index == 23 + 12
 
-                                                ? interest(myInterest.name, 440.0, 306.0, 98, index)
-                                                : interest(myInterest.name, 200.0, 300.0, 111, index);
+                                                ? interest(myInterest.name, 440.0, 306.0, 98, index,myInterest.img)
+                                                : interest(myInterest.name, 200.0, 300.0, 111, index,myInterest.img);
                                         }).toList(),
                                       ),
                                     )
@@ -250,13 +254,27 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) {
-                                return Profile();
-                              }),
-                        );
+                        print(selecCount.toString());
+                        if(selecCount<5){
+                          Fluttertoast.showToast(
+                              msg: "Please choose 5 or more interests",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0
+                          );
+                        }else{
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                                opaque: false,
+                                pageBuilder: (BuildContext context, _, __) {
+                                  return Profile();
+                                }),
+                          );
+                        }
+
                       },
                     )
                   ],
@@ -270,7 +288,7 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
   }
 
 //intrest circle
-  Positioned interest(text, x, y, size, index) {
+  Positioned interest(text, x, y, size, index,img) {
     AnimationController controller = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
 
@@ -285,11 +303,18 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
     bool isSelected = Provider.of<PassionsProvider>(context, listen: true)
         .savedpassions
         .contains(text);
+
+
     return Positioned(
       left: ScreenUtil().setSp(x),
       top: ScreenUtil().setSp(y),
       child: GestureDetector(
         onTap: () {
+          if(!isSelected){
+            selecCount++;
+          }else{
+            selecCount--;
+          }
           Provider.of<PassionsProvider>(context, listen: false)
               .addToPassions(index);
         },
@@ -298,6 +323,7 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
           builder: (buildContext, child) {
             if (offsetAnimation.value < 0.0)
               print('${offsetAnimation.value + 8.0}');
+
             return Stack(
               children: [
                 ClipRRect(
@@ -308,23 +334,56 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
                     width: ScreenUtil().setSp(size) * 1.0,
                     height: ScreenUtil().setSp(size) * 1.0,
                     alignment: Alignment.center,
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Color(0xff00209B), Color(0xff4B82FF)],
-                            begin: Alignment.bottomCenter,
-                            end:Alignment.center,
-                            tileMode: TileMode.clamp)
+                    child: CachedNetworkImage(
+                      width: ScreenUtil().setSp(size) * 1.0,
+                      height: ScreenUtil().setSp(size) * 1.0,
+                      imageUrl: "https://api.tap-dating.com/img/interests/$img",
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) =>Container(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Color(0xff00209B), Color(0xff4B82FF)],
+                                begin: Alignment.bottomCenter,
+                                end:Alignment.center,
+                                tileMode: TileMode.clamp)
+                        ),
+                        child: AutoSizeText(
+                          text,
+                          maxLines: 1,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ScreenUtil().setSp(17),
+                              fontFamily: 'helvetica',
+                              fontWeight: FontWeight.w100),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => new Container(
+                        width: ScreenUtil().setSp(size) * 1.0,
+                        height: ScreenUtil().setSp(size) * 1.0,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Color(0xff00209B), Color(0xff4B82FF)],
+                                begin: Alignment.bottomCenter,
+                                end:Alignment.center,
+                                tileMode: TileMode.clamp)
+                        ),
+                      ),
                     ),
-                    child: AutoSizeText(
-                      text,
-                      maxLines: 1,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenUtil().setSp(17),
-                          fontFamily: 'helvetica',
-                          fontWeight: FontWeight.w100),
-                    ),
+                  ),
+                ),
+                Container(
+                  width: ScreenUtil().setSp(size) * 1.0,
+                  height: ScreenUtil().setSp(size) * 1.0,
+                  alignment: Alignment.center,
+                  child: AutoSizeText(
+                    text,
+                    maxLines: 1,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: ScreenUtil().setSp(17),
+                        fontFamily: 'helvetica',
+                        fontWeight: FontWeight.w100),
                   ),
                 ),
                 ClipRRect(

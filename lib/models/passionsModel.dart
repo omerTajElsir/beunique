@@ -58,6 +58,7 @@ class Interests {
   String date;
   String slug;
   int iV;
+  String img;
 
   Interests(
       {this.sId,
@@ -66,6 +67,7 @@ class Interests {
       this.category,
       this.date,
       this.slug,
+      this.img,
       this.iV});
 
   Interests.fromJson(Map<String, dynamic> json) {
@@ -76,6 +78,7 @@ class Interests {
     date = json['date'];
     slug = json['slug'];
     iV = json['__v'];
+    img = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -87,6 +90,7 @@ class Interests {
     data['date'] = this.date;
     data['slug'] = this.slug;
     data['__v'] = this.iV;
+    data['image'] = this.img;
     return data;
   }
 }
