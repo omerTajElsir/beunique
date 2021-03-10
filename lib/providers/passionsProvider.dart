@@ -1,5 +1,5 @@
-import 'package:beunique/core/models/passionsModel.dart';
-import 'package:beunique/core/services/passionsSerives.dart';
+import 'package:beunique/models/passionsModel.dart';
+import 'package:beunique/repositories/passionsSerives.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

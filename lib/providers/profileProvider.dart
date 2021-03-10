@@ -1,5 +1,5 @@
-import 'package:beunique/core/models/profileModel.dart';
-import 'package:beunique/core/services/profileServices.dart';
+import 'package:beunique/models/profileModel.dart';
+import 'package:beunique/repositories/profileServices.dart';
 import 'package:beunique/ui/widgets/videoPlaerItem.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +18,7 @@ class ProfileProvider extends ChangeNotifier {
   List<Placemark> placemark;
   List<Widget> imageSliders;
   bool liked = false;
+  bool dislike = false;
   void getData(context) async {
     try {
       //get the profile data
@@ -47,6 +48,11 @@ class ProfileProvider extends ChangeNotifier {
 
   like() {
     liked = !liked;
+    notifyListeners();
+  }
+
+  thumb() {
+    dislike = !dislike;
     notifyListeners();
   }
 

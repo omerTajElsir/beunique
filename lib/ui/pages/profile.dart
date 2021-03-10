@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:beunique/providers/profileProvider.dart';
 import 'package:beunique/ui/widgets/imageFullScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
-import 'package:beunique/core/providers/profileProvider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:video_player/video_player.dart';
@@ -49,207 +49,214 @@ class _ProfileState extends State<Profile> {
           child: ContainerResponsive(
             decoration: BoxDecoration(
                 image: DecorationImage(
-              fit: BoxFit.fill,
-              // background image
-              image: AssetImage(
-                'assets/images/passionsBackground.png',
-              ),
-            )),
+                  fit: BoxFit.fill,
+                  // background image
+                  image: AssetImage(
+                    'assets/images/passionsBackground.png',
+                  ),
+                )),
             child:
-                //data have been pulled
-                ListView(
+            //data have been pulled
+            ListView(
               children: <Widget>[
                 !Provider.of<ProfileProvider>(context, listen: true).isLoading
                     ?
 
-                    //the header
-                    Stack(
-                        children: [
-                          //the header media
-                          Provider.of<ProfileProvider>(context, listen: false)
-                                          .imageSliders !=
-                                      null &&
-                                  Provider.of<ProfileProvider>(context,
-                                          listen: false)
-                                      .imageSliders
-                                      .isNotEmpty
-                              ? Consumer<ProfileProvider>(
-                                  builder: (context, provider, child) {
-                                  return CarouselSlider(
-                                    items: provider.imageSliders,
-                                    options: CarouselOptions(
-                                        scrollDirection: Axis.horizontal,
-                                        aspectRatio: width / 480.h,
-                                        viewportFraction: 1,
-                                        onPageChanged: (index, reason) {
-                                          setState(() {
-                                            provider.current = index;
-                                          });
-                                        }),
-                                  );
-                                })
-                              : Container(
-                                  width: width,
-                                  height: 480.h,
-                                  child: Center(
-                                    child: AutoSizeText(
-                                      ' No Media Avilable Right Now ',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: ScreenUtil().setSp(16),
-                                          fontFamily: 'helvetica',
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  ),
-                                ),
-                          // to passions screen
-                          Padding(
-                            padding: const EdgeInsets.all(28.0),
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_back, color: Colors.white),
-                              onPressed: () => Navigator.pop(context),
-                            ),
+                //the header
+                Stack(
+                  children: [
+                    //the header media
+                    Provider.of<ProfileProvider>(context, listen: false)
+                        .imageSliders !=
+                        null &&
+                        Provider.of<ProfileProvider>(context,
+                            listen: false)
+                            .imageSliders
+                            .isNotEmpty
+                        ? Consumer<ProfileProvider>(
+                        builder: (context, provider, child) {
+                          return CarouselSlider(
+                            items: provider.imageSliders,
+                            options: CarouselOptions(
+                                scrollDirection: Axis.horizontal,
+                                aspectRatio: width / 480.h,
+                                viewportFraction: 1,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    provider.current = index;
+                                  });
+                                }),
+                          );
+                        })
+                        : Container(
+                      width: width,
+                      height: 480.h,
+                      child: Center(
+                        child: AutoSizeText(
+                          ' No Media Avilable Right Now ',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ScreenUtil().setSp(16),
+                              fontFamily: 'helvetica',
+                              fontWeight: FontWeight.w300),
+                        ),
+                      ),
+                    ),
+                    // to passions screen
+                    Padding(
+                      padding: const EdgeInsets.all(28.0),
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back, color: Colors.white),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                    //fav button
+                    Positioned(
+                      right: 28.w,
+                      bottom: 192.h,
+                      child: ClipRRect(
+                        borderRadius: new BorderRadius.all(
+                          Radius.circular(360),
+                        ),
+                        child: Container(
+                          width: 49,
+                          height: 49,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  Color(0xff0032FF).withOpacity(0.3),
+                                  Color(0xff0032FF).withOpacity(0.7)
+                                ],
+                                begin: const FractionalOffset(0.0, 0.9),
+                                end: const FractionalOffset(0.0, 0.4),
+                                stops: [0.0, 1.0],
+                                tileMode: TileMode.clamp),
                           ),
-                          //fav button
-                          Positioned(
-                            right: 28.w,
-                            bottom: 192.h,
-                            child: ClipRRect(
-                              borderRadius: new BorderRadius.all(
-                                Radius.circular(360),
-                              ),
-                              child: Container(
-                                width: 49,
-                                height: 49,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xff0032FF).withOpacity(0.3),
-                                        Color(0xff0032FF).withOpacity(0.7)
-                                      ],
-                                      begin: const FractionalOffset(0.0, 0.9),
-                                      end: const FractionalOffset(0.0, 0.4),
-                                      stops: [0.0, 1.0],
-                                      tileMode: TileMode.clamp),
-                                ),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Provider.of<ProfileProvider>(context,
-                                                listen: true)
-                                            .liked
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () => Provider.of<ProfileProvider>(
-                                          context,
-                                          listen: false)
-                                      .like(),
-                                ),
-                              ),
+                          child: IconButton(
+                            icon: Icon(
+                              Provider.of<ProfileProvider>(context,
+                                  listen: true)
+                                  .liked
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.white,
                             ),
+                            onPressed: () => Provider.of<ProfileProvider>(
+                                context,
+                                listen: false)
+                                .like(),
                           ),
-                          //dislike button
-                          Positioned(
-                            right: 28.w,
-                            bottom: 120.h,
-                            child: ClipRRect(
-                              borderRadius: new BorderRadius.all(
-                                Radius.circular(360),
-                              ),
-                              child: Container(
-                                width: 49,
-                                height: 49,
-                                padding: EdgeInsetsResponsive.all(12),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xff0032FF).withOpacity(0.3),
-                                        Color(0xff0032FF).withOpacity(0.7)
-                                      ],
-                                      begin: const FractionalOffset(0.0, 0.9),
-                                      end: const FractionalOffset(0.0, 0.4),
-                                      stops: [0.0, 1.0],
-                                      tileMode: TileMode.clamp),
-                                ),
-                                child: SvgPicture.asset(
-                                  'assets/images/dislike.svg',
-                                  color: Colors.white,
-                                  height: 22.h,
-                                  width: 22.w,
-                                ),
-                              ),
+                        ),
+                      ),
+                    ),
+                    //dislike button
+                    Positioned(
+                      right: 28.w,
+                      bottom: 120.h,
+                      child: ClipRRect(
+                        borderRadius: new BorderRadius.all(
+                          Radius.circular(360),
+                        ),
+                        child: Container(
+                          width: 49,
+                          height: 49,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  Color(0xff0032FF).withOpacity(0.3),
+                                  Color(0xff0032FF).withOpacity(0.7)
+                                ],
+                                begin: const FractionalOffset(0.0, 0.9),
+                                end: const FractionalOffset(0.0, 0.4),
+                                stops: [0.0, 1.0],
+                                tileMode: TileMode.clamp),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Provider.of<ProfileProvider>(context,
+                                  listen: true)
+                                  .dislike
+                                  ? Icons.thumb_down
+                                  : Icons.thumb_down_alt_outlined,
+                              color: Colors.white,
                             ),
+                            onPressed: () => Provider.of<ProfileProvider>(
+                                context,
+                                listen: false)
+                                .thumb(),
                           ),
-                          //header indicator
-                          Provider.of<ProfileProvider>(context, listen: false)
-                                          .imageSliders !=
-                                      null &&
-                                  Provider.of<ProfileProvider>(context,
-                                          listen: false)
-                                      .imageSliders
-                                      .isNotEmpty
-                              ? Positioned(
-                                  right: (width / 2 -
-                                          (8 *
-                                              Provider.of<ProfileProvider>(
-                                                      context,
-                                                      listen: false)
-                                                  .imageSliders
-                                                  .length))
-                                      .w,
-                                  bottom: (68).h,
-                                  child: Consumer<ProfileProvider>(
-                                      builder: (context, provider, child) {
-                                    List<String> myList = provider.myHeaderList;
+                        ),
+                      ),
+                    ),
+                    //header indicator
+                    Provider.of<ProfileProvider>(context, listen: false)
+                        .imageSliders !=
+                        null &&
+                        Provider.of<ProfileProvider>(context,
+                            listen: false)
+                            .imageSliders
+                            .isNotEmpty
+                        ? Positioned(
+                      right: (width / 2 -
+                          (8 *
+                              Provider.of<ProfileProvider>(
+                                  context,
+                                  listen: false)
+                                  .imageSliders
+                                  .length))
+                          .w,
+                      bottom: (68).h,
+                      child: Consumer<ProfileProvider>(
+                          builder: (context, provider, child) {
+                            List<String> myList = provider.myHeaderList;
 
-                                    return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: myList.map((url) {
-                                        int index = myList.indexOf(url);
-                                        return ContainerResponsive(
-                                          padding: EdgeInsetsResponsive.all(8),
-                                          margin: EdgeInsetsResponsive.all(4),
-                                          width: 5,
-                                          height: 5,
-                                          decoration: BoxDecoration(
-                                            color: provider.current == index
-                                                ? Colors.white
-                                                : Colors.grey[600],
-                                            border: Border.all(
-                                                color: provider.current == index
-                                                    ? Colors.white
-                                                    : Colors.grey[600],
-                                                width: 1),
-                                            borderRadius:
-                                                BorderRadius.circular(360),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    );
-                                  }),
-                                )
-                              : Container(),
-                        ],
-                      )
+                            return Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: myList.map((url) {
+                                int index = myList.indexOf(url);
+                                return ContainerResponsive(
+                                  padding: EdgeInsetsResponsive.all(8),
+                                  margin: EdgeInsetsResponsive.all(4),
+                                  width: 5,
+                                  height: 5,
+                                  decoration: BoxDecoration(
+                                    color: provider.current == index
+                                        ? Colors.white
+                                        : Colors.grey[600],
+                                    border: Border.all(
+                                        color: provider.current == index
+                                            ? Colors.white
+                                            : Colors.grey[600],
+                                        width: 1),
+                                    borderRadius:
+                                    BorderRadius.circular(360),
+                                  ),
+                                );
+                              }).toList(),
+                            );
+                          }),
+                    )
+                        : Container(),
+                  ],
+                )
                     : Container(
-                        width: width,
-                        height: 480.h,
-                        child: Stack(
-                          children: [
-                            // to passions screen
-                            Padding(
-                              padding: const EdgeInsets.all(28.0),
-                              child: IconButton(
-                                icon:
-                                    Icon(Icons.arrow_back, color: Colors.white),
-                                onPressed: () => Navigator.pop(context),
-                              ),
-                            ),
-                            Center(child: CircularProgressIndicator()),
-                          ],
-                        )),
+                    width: width,
+                    height: 480.h,
+                    child: Stack(
+                      children: [
+                        // to passions screen
+                        Padding(
+                          padding: const EdgeInsets.all(28.0),
+                          child: IconButton(
+                            icon:
+                            Icon(Icons.arrow_back, color: Colors.white),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ),
+                        Center(child: CircularProgressIndicator()),
+                      ],
+                    )),
                 SizedBoxResponsive(
                   height: 20,
                 ),
@@ -261,20 +268,20 @@ class _ProfileState extends State<Profile> {
                     ),
                     Consumer<ProfileProvider>(
                         builder: (context, provider, child) {
-                      return AutoSizeText(
-                        !Provider.of<ProfileProvider>(context, listen: true)
+                          return AutoSizeText(
+                            !Provider.of<ProfileProvider>(context, listen: true)
                                 .isLoading
-                            ? provider.profile.name == null
+                                ? provider.profile.name == null
                                 ? "unkown"
                                 : '${provider.profile.name}, ${provider.profile.age}'
-                            : "Name",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: ScreenUtil().setSp(16),
-                            fontFamily: 'helvetica',
-                            fontWeight: FontWeight.w300),
-                      );
-                    }),
+                                : "Name",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: ScreenUtil().setSp(16),
+                                fontFamily: 'helvetica',
+                                fontWeight: FontWeight.w300),
+                          );
+                        }),
                   ],
                 ),
                 SizedBoxResponsive(
@@ -288,20 +295,20 @@ class _ProfileState extends State<Profile> {
                     ),
                     Consumer<ProfileProvider>(
                         builder: (context, provider, child) {
-                      return AutoSizeText(
-                        !Provider.of<ProfileProvider>(context, listen: true)
+                          return AutoSizeText(
+                            !Provider.of<ProfileProvider>(context, listen: true)
                                 .isLoading
-                            ? provider.profile?.bio ?? "no bio"
-                            : 'BIO',
-                        maxLines: 2,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenUtil().setSp(14),
-                          fontFamily: 'helvetica',
-                        ),
-                      );
-                    }),
+                                ? provider.profile?.bio ?? "no bio"
+                                : 'BIO',
+                            maxLines: 2,
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ScreenUtil().setSp(14),
+                              fontFamily: 'helvetica',
+                            ),
+                          );
+                        }),
                   ],
                 ),
                 SizedBoxResponsive(
@@ -330,53 +337,54 @@ class _ProfileState extends State<Profile> {
                   padding: EdgeInsetsResponsive.only(right: 36, left: 36),
                   child: ClipRRect(
                     borderRadius: new BorderRadius.all(
-                      Radius.circular(5),
+                      Radius.circular(15),
                     ),
                     child: ContainerResponsive(
                       color: Colors.white.withOpacity(0.2),
                       child: Consumer<ProfileProvider>(
                           builder: (context, provider, child) {
-                        return !Provider.of<ProfileProvider>(context,
-                                    listen: true)
+                            return !Provider.of<ProfileProvider>(context,
+                                listen: true)
                                 .isLoading
-                            ? provider.profile.interests == null ||
-                                    provider.profile.interests.isEmpty
+                                ? provider.profile.interests == null ||
+                                provider.profile.interests.isEmpty
                                 ? Container(
-                                    width: width,
-                                    height: 280.h,
-                                    child: Center(
-                                      child: AutoSizeText(
-                                        'No Information Avilable',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: ScreenUtil().setSp(14),
-                                            fontFamily: 'helvetica',
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  )
+                              width: width,
+                              height: 280.h,
+
+                              child: Center(
+                                child: AutoSizeText(
+                                  'No Information Avilable',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: ScreenUtil().setSp(14),
+                                      fontFamily: 'helvetica',
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            )
                                 : Column(
-                                    children: [
-                                      profileRow('Name',
-                                          '${provider.profile.name}', true),
-                                      profileRow('Gender',
-                                          '${provider.profile.gender}', true),
-                                      profileRow('Age',
-                                          '${provider.profile.age}', true),
-                                      !provider.isLoadingLoc
-                                          ? profileRow(
-                                              'Location',
-                                              '${provider.placemark[0].country}, ${provider.placemark[0].locality}',
-                                              false)
-                                          : CircularProgressIndicator(),
-                                    ],
-                                  )
-                            : Container(
+                              children: [
+                                profileRow('Name',
+                                    '${provider.profile.name}', true),
+                                profileRow('Gender',
+                                    '${provider.profile.gender}', true),
+                                profileRow('Age',
+                                    '${provider.profile.age}', true),
+                                !provider.isLoadingLoc
+                                    ? profileRow(
+                                    'Location',
+                                    '${provider.placemark[0].country}, ${provider.placemark[0].locality}',
+                                    false)
+                                    : CircularProgressIndicator(),
+                              ],
+                            )
+                                : Container(
                                 width: width,
                                 height: 280.h,
                                 child:
-                                    Center(child: CircularProgressIndicator()));
-                      }),
+                                Center(child: CircularProgressIndicator()));
+                          }),
                     ),
                   ),
                 ),
@@ -412,48 +420,48 @@ class _ProfileState extends State<Profile> {
                         color: Colors.white.withOpacity(0.2),
                         child: Consumer<ProfileProvider>(
                             builder: (context, provider, child) {
-                          return !Provider.of<ProfileProvider>(context,
-                                      listen: true)
+                              return !Provider.of<ProfileProvider>(context,
+                                  listen: true)
                                   .isLoading
-                              ? provider.profile.interests == null ||
-                                      provider.profile.interests.isEmpty
+                                  ? provider.profile.interests == null ||
+                                  provider.profile.interests.isEmpty
                                   ? Container(
-                                      width: width,
-                                      height: 450.h,
-                                      child: Center(
-                                        child: AutoSizeText(
-                                          'No Information Avilable',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: ScreenUtil().setSp(14),
-                                              fontFamily: 'helvetica',
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    )
+                                width: width,
+                                height: 450.h,
+                                child: Center(
+                                  child: AutoSizeText(
+                                    'No Information Avilable',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: ScreenUtil().setSp(14),
+                                        fontFamily: 'helvetica',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              )
                                   : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: provider.profile.basicInfo
-                                          .map((info) {
-                                        int index = provider.profile.basicInfo
-                                            .indexOf(info);
-                                        return profileRow(
-                                            '${info.key.name}',
-                                            '${info.value}',
-                                            index !=
-                                                    provider.profile.basicInfo
-                                                            .length -
-                                                        1
-                                                ? true
-                                                : false);
-                                      }).toList())
-                              : Container(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: provider.profile.basicInfo
+                                      .map((info) {
+                                    int index = provider.profile.basicInfo
+                                        .indexOf(info);
+                                    return profileRow(
+                                        '${info.key.name}',
+                                        '${info.value}',
+                                        index !=
+                                            provider.profile.basicInfo
+                                                .length -
+                                                1
+                                            ? true
+                                            : false);
+                                  }).toList())
+                                  : Container(
                                   width: width,
                                   height: 450.h,
                                   child: Center(
                                       child: CircularProgressIndicator()));
-                        })),
+                            })),
                   ),
                 ),
                 SizedBoxResponsive(
@@ -467,7 +475,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     AutoSizeText(
                       !Provider.of<ProfileProvider>(context, listen: true)
-                              .isLoading
+                          .isLoading
                           ? '${Provider.of<ProfileProvider>(context, listen: true).profile.photos.length} Instagram Posts'
                           : 'Instagram Posts',
                       style: TextStyle(
@@ -483,99 +491,102 @@ class _ProfileState extends State<Profile> {
                 ),
                 ContainerResponsive(
                   width: width,
-                  height: 214,
+                  padding: EdgeInsets.only(left: 30,right: 30),
                   child: Consumer<ProfileProvider>(
                       builder: (context, provider, child) {
-                    return !Provider.of<ProfileProvider>(context, listen: true)
+                        return !Provider.of<ProfileProvider>(context, listen: true)
                             .isLoading
-                        ? provider.profile.interests == null ||
-                                provider.profile.interests.isEmpty
+                            ? provider.profile.interests == null ||
+                            provider.profile.interests.isEmpty
                             ? Center(
-                                child: AutoSizeText(
-                                  'No Posts Added Yet',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: ScreenUtil().setSp(14),
-                                      fontFamily: 'helvetica',
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )
+                          child: AutoSizeText(
+                            'No Posts Added Yet',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: ScreenUtil().setSp(14),
+                                fontFamily: 'helvetica',
+                                fontWeight: FontWeight.w500),
+                          ),
+                        )
                             : GridView.builder(
-                                itemCount: provider.profile.photos.length,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio: 126 / 158,
-                                        crossAxisCount: 2),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        PageRouteBuilder(
-                                            opaque: false,
-                                            pageBuilder:
-                                                (BuildContext context, _, __) {
-                                              return FullScreenImage(
-                                                pic: provider.profile
-                                                    .photos[index].filename,
-                                              );
-                                            }),
-                                      );
-                                    },
-                                    child: ContainerResponsive(
-                                      width: 106,
-                                      height: 108,
-                                      margin: EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: CachedNetworkImage(
-                                        imageUrl: provider
-                                            .profile.photos[index].filename,
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) =>
-                                            new CircularProgressIndicator(
-                                          valueColor:
-                                              new AlwaysStoppedAnimation<Color>(
-                                                  Colors.white),
-                                        ),
-                                        errorWidget: (context, url, error) =>
-                                            new Icon(Icons.error),
-                                      ),
-                                    ),
-                                  );
-                                })
-                        : GridView(
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.all(5),
-                                  color: Colors.white.withOpacity(0.2),
-                                  child: Center(
-                                      child: CircularProgressIndicator())),
-                              Container(
-                                  margin: EdgeInsets.all(5),
-                                  color: Colors.white.withOpacity(0.2),
-                                  child: Center(
-                                      child: CircularProgressIndicator())),
-                              Container(
-                                  margin: EdgeInsets.all(5),
-                                  color: Colors.white.withOpacity(0.2),
-                                  child: Center(
-                                      child: CircularProgressIndicator())),
-                              Container(
-                                  margin: EdgeInsets.all(5),
-                                  color: Colors.white.withOpacity(0.2),
-                                  child: Center(
-                                      child: CircularProgressIndicator())),
-                            ],
-                            scrollDirection: Axis.horizontal,
+                            itemCount: provider.profile.photos.length,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    childAspectRatio: 126 / 158,
-                                    crossAxisCount: 2),
-                          );
-                  }),
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                                childAspectRatio: 1 / 1,
+                                crossAxisCount: 3),
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    PageRouteBuilder(
+                                        opaque: false,
+                                        pageBuilder:
+                                            (BuildContext context, _, __) {
+                                          return FullScreenImage(
+                                            pic: provider.profile
+                                                .photos[index].filename,
+                                          );
+                                        }),
+                                  );
+                                },
+                                child: ContainerResponsive(
+                                  width: 106,
+                                  height: 108,
+                                  margin: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: provider
+                                          .profile.photos[index].filename,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) =>
+                                      new CircularProgressIndicator(
+                                        valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            Colors.white),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                      new Icon(Icons.error),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            })
+                            : GridView(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.all(5),
+                                color: Colors.white.withOpacity(0.2),
+                                child: Center(
+                                    child: CircularProgressIndicator())),
+                            Container(
+                                margin: EdgeInsets.all(5),
+                                color: Colors.white.withOpacity(0.2),
+                                child: Center(
+                                    child: CircularProgressIndicator())),
+                            Container(
+                                margin: EdgeInsets.all(5),
+                                color: Colors.white.withOpacity(0.2),
+                                child: Center(
+                                    child: CircularProgressIndicator())),
+                            Container(
+                                margin: EdgeInsets.all(5),
+                                color: Colors.white.withOpacity(0.2),
+                                child: Center(
+                                    child: CircularProgressIndicator())),
+                          ],
+                          scrollDirection: Axis.horizontal,
+                          gridDelegate:
+                          SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 126 / 158,
+                              crossAxisCount: 2),
+                        );
+                      }),
                 ),
                 SizedBoxResponsive(
                   height: 40,
@@ -603,64 +614,50 @@ class _ProfileState extends State<Profile> {
                   height: 520,
                   child: Consumer<ProfileProvider>(
                       builder: (context, provider, child) {
-                    return !Provider.of<ProfileProvider>(context, listen: true)
+                        return !Provider.of<ProfileProvider>(context, listen: true)
                             .isLoading
-                        ? provider.profile.interests == null ||
-                                provider.profile.interests.isEmpty
+                            ? provider.profile.interests == null ||
+                            provider.profile.interests.isEmpty
                             ? Center(
-                                child: AutoSizeText(
-                                  'No Interests Added Yet',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: ScreenUtil().setSp(14),
-                                      fontFamily: 'helvetica',
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )
+                          child: AutoSizeText(
+                            'No Interests Added Yet',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: ScreenUtil().setSp(14),
+                                fontFamily: 'helvetica',
+                                fontWeight: FontWeight.w500),
+                          ),
+                        )
                             : Stack(
-                                children:
-                                    provider.profile.interests.map((interest) {
-                                int index = provider.profile.interests
-                                    .indexOf(interest);
-                                return index == 0
-                                    ? coloredInterest(
-                                        interest.name, 24.0.w, 33.0.h)
-                                    : index == 1
-                                        ? coloredInterest(
-                                            interest.name, 155.0.w, 0.0.h)
-                                        : index == 2
-                                            ? coloredInterest(
-                                                interest.name, 242.0.w, 242.0.h)
-                                            : index == 3
-                                                ? nonColoredInterest(
-                                                    interest.name,
-                                                    0.0.w,
-                                                    181.0.h)
-                                                : index == 4
-                                                    ? nonColoredInterest(
-                                                        interest.name,
-                                                        256.0.w,
-                                                        94.0.h)
-                                                    : index == 4
-                                                        ? nonColoredInterest(
-                                                            interest.name,
-                                                            131.0.w,
-                                                            152.0.h)
-                                                        : nonColoredInterest(
-                                                            interest.name,
-                                                            107.0.w,
-                                                            304.0.h);
-                              }).toList())
-                        : Stack(children: [
-                            loadingInterest(24.0.w, 33.0.h),
-                            loadingInterest(155.0.w, 0.0.h),
-                            loadingInterest(242.0.w, 242.0.h),
-                            loadingInterest(0.0.w, 181.0.h),
-                            loadingInterest(256.0.w, 94.0.h),
-                            loadingInterest(131.0.w, 152.0.h),
-                            loadingInterest(107.0.w, 304.0.h)
-                          ]);
-                  }),
+                            children:
+                            provider.profile.interests.map((interest) {
+                              int index = provider.profile.interests
+                                  .indexOf(interest);
+                              return index == 0
+                                  ? coloredInterest(
+                                  interest.name, 24.0.w, 33.0.h)
+                                  : index == 1
+                                  ? coloredInterest(interest.name, 170.0.w, 0.0.h)
+                                  : index == 2
+                                  ? coloredInterest(interest.name, 180.0.w, 270.0.h)
+                                  : index == 3
+                                  ? nonColoredInterest(interest.name, 0.0.w, 200.0.h)
+                                  : index == 4
+                                  ? nonColoredInterest(interest.name, 256.0.w, 120.0.h)
+                                  : index == 5
+                                  ? coloredInterest(interest.name, 120.0.w, 160.0.h)
+                                  : nonColoredInterest(interest.name, 107.0.w, 304.0.h);
+                            }).toList())
+                            : Stack(children: [
+                          loadingInterest(24.0.w, 33.0.h),
+                          loadingInterest(155.0.w, 0.0.h),
+                          loadingInterest(242.0.w, 242.0.h),
+                          loadingInterest(0.0.w, 181.0.h),
+                          loadingInterest(256.0.w, 94.0.h),
+                          loadingInterest(131.0.w, 152.0.h),
+                          loadingInterest(107.0.w, 304.0.h)
+                        ]);
+                      }),
                 ),
                 SizedBoxResponsive(
                   height: 40,
@@ -826,7 +823,7 @@ class _ProfileState extends State<Profile> {
             height: 133,
             alignment: Alignment.center,
             decoration:
-                BoxDecoration(color: Color(0xff495896).withOpacity(0.4)),
+            BoxDecoration(color: Color(0xff495896).withOpacity(0.4)),
             child: CircularProgressIndicator()),
       ),
     );
@@ -835,13 +832,15 @@ class _ProfileState extends State<Profile> {
   ContainerResponsive profileRow(field, value, divider) {
     return ContainerResponsive(
       height: divider ? 81 : 61,
+      padding: EdgeInsets.only(left: 5,right: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ContainerResponsive(
+                padding: EdgeInsets.only(left: 20,right: 20),
                 width: 120,
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
@@ -850,24 +849,20 @@ class _ProfileState extends State<Profile> {
                   maxLines: 1,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: ScreenUtil().setSp(17),
+                      fontSize: 17,
                       fontFamily: 'helvetica',
                       fontWeight: FontWeight.w100),
                 ),
               ),
-              SizedBoxResponsive(
-                width: 50,
-              ),
-              ContainerResponsive(
-                width: 120,
-                alignment: Alignment.centerLeft,
+              Expanded(child: Container()),
+              Flexible(
                 child: AutoSizeText(
                   value,
                   textAlign: TextAlign.start,
                   maxLines: 1,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: ScreenUtil().setSp(17),
+                      fontSize: 17,
                       fontFamily: 'helvetica',
                       fontWeight: FontWeight.w300),
                 ),
@@ -876,9 +871,9 @@ class _ProfileState extends State<Profile> {
           ),
           divider
               ? Divider(
-                  color: Color(0xff0A2175),
-                  thickness: 2,
-                )
+            color: Color(0xff0A2175),
+            thickness: 2,
+          )
               : Container()
         ],
       ),

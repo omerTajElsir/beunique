@@ -1,11 +1,9 @@
+import 'package:beunique/providers/passionsProvider.dart';
+import 'package:beunique/providers/profileProvider.dart';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:beunique/ui/pages/passions.dart';
-import 'package:beunique/ui/theme/appTheme.dart';
 import 'package:provider/provider.dart';
-
-import 'core/providers/passionsProvider.dart';
-import 'core/providers/profileProvider.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,7 +21,8 @@ class MyApp extends StatelessWidget {
         app: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Test App',
-          theme: appTheme(),
+          theme:ThemeData(
+              primaryColor: Colors.blue),
           home: Passions(),
         ),
       ),

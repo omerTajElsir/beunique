@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:beunique/core/providers/passionsProvider.dart';
+import 'package:beunique/providers/passionsProvider.dart';
 import 'package:beunique/ui/pages/profile.dart';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -44,12 +44,12 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
           child: ContainerResponsive(
             decoration: BoxDecoration(
                 image: DecorationImage(
-              fit: BoxFit.fill,
-              //  screen background
-              image: AssetImage(
-                'assets/images/passionsBackground.png',
-              ),
-            )),
+                  fit: BoxFit.fill,
+                  //  screen background
+                  image: AssetImage(
+                    'assets/images/passionsBackground.png',
+                  ),
+                )),
             child: SingleChildScrollView(
               child: SafeArea(
                 child: Column(
@@ -107,151 +107,122 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
                         //interests widget
                         Consumer<PassionsProvider>(
                             builder: (context, provider, child) {
-                          //data have been pulled
-                          return SizedBoxResponsive(
-                            height: 500,
-                            width: 500,
-                            child: Scrollbar(
-                              isAlwaysShown: true,
-                              controller: _scrollController,
-                              child: SingleChildScrollView(
-                                controller: _scrollController,
-                                scrollDirection: Axis.horizontal,
-                                child: !provider.isLoading
-                                    ? provider.passions.interests == null ||
-                                            provider.passions.interests.isEmpty
+                              //data have been pulled
+                              return SizedBoxResponsive(
+                                height: 440,
+                                width: 500,
+                                child: Scrollbar(
+                                  thickness: 2,
+                                  isAlwaysShown: true,
+                                  controller: _scrollController,
+                                  child: SingleChildScrollView(
+                                    controller: _scrollController,
+                                    scrollDirection: Axis.horizontal,
+                                    child: !provider.isLoading
+                                        ? provider.passions.interests == null ||
+                                        provider.passions.interests.isEmpty
                                         ? Container(
-                                            width: width,
-                                            height: 280.h,
-                                            child: Center(
-                                              child: AutoSizeText(
-                                                'No Information Avilable',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize:
-                                                        ScreenUtil().setSp(14),
-                                                    fontFamily: 'helvetica',
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                          )
-                                        : SizedBoxResponsive(
-                                            height: 500,
-                                            width: provider
-                                                    .passions.interests.length *
-                                                45.0,
-                                            child: Stack(
-                                              children: provider
-                                                  .passions.interests
-                                                  .map((myInterest) {
-                                                //find index of current interest
-                                                int index = provider
-                                                    .passions.interests
-                                                    .indexOf(myInterest);
-                                                // go throw all the interest, filter the index and inesrt it to the algorithim blow to
-                                                // keep the spaces and the sizes as in the XD
-                                                return index == 0 ||
-                                                        index == 11 + 1 ||
-                                                        index == 23 + 1
-                                                    ? interest(myInterest.name,
-                                                        10.0, 40.0, 64, index)
-                                                    : index == 1 ||
-                                                            index == 11 + 2 ||
-                                                            index == 23 + 2
-                                                        ? interest(
-                                                            myInterest.name,
-                                                            20.0,
-                                                            180.0,
-                                                            104,
-                                                            index)
-                                                        : index == 2 ||
-                                                                index ==
-                                                                    11 + 3 ||
-                                                                index == 23 + 3
-                                                            ? interest(
-                                                                myInterest.name,
-                                                                0.0,
-                                                                340.0,
-                                                                103,
-                                                                index)
-                                                            : index == 3 ||
-                                                                    index ==
-                                                                        11 +
-                                                                            4 ||
-                                                                    index ==
-                                                                        23 + 4
-                                                                ? interest(
-                                                                    myInterest
-                                                                        .name,
-                                                                    100.0,
-                                                                    20.0,
-                                                                    110,
-                                                                    index)
-                                                                : index == 4 ||
-                                                                        index ==
-                                                                            11 +
-                                                                                5 ||
-                                                                        index ==
-                                                                            23 +
-                                                                                5
-                                                                    ? interest(
-                                                                        myInterest
-                                                                            .name,
-                                                                        140.0,
-                                                                        200.0,
-                                                                        96,
-                                                                        index)
-                                                                    : index == 5 ||
-                                                                            index ==
-                                                                                11 +
-                                                                                    6 ||
-                                                                            index ==
-                                                                                23 +
-                                                                                    6
-                                                                        ? interest(
-                                                                            myInterest
-                                                                                .name,
-                                                                            110.0,
-                                                                            360.0,
-                                                                            111,
-                                                                            index)
-                                                                        : index == 6 ||
-                                                                                index == 11 + 7 ||
-                                                                                index == 23 + 7
-                                                                            ? interest(myInterest.name, 240.0, 30.0, 64, index)
-                                                                            : index == 7 || index == 11 + 8 || index == 23 + 8
-                                                                                ? interest(myInterest.name, 250.0, 150.0, 92, index)
-                                                                                : index == 8 || index == 11 + 9 || index == 23 + 9
-                                                                                    ? interest(myInterest.name, 240.0, 320.0, 136, index)
-                                                                                    : index == 9 || index == 11 + 10 || index == 23 + 10
-                                                                                        ? interest(myInterest.name, 320.0, 60.0, 90, index)
-                                                                                        : index == 10 || index == 11 + 11 || index == 23 + 11
-                                                                                            ? interest(myInterest.name, 370.0, 186.0, 64, index)
-                                                                                            : index == 11 || index == 11 + 12 || index == 23 + 12
-                                                                                                ? interest(myInterest.name, 380.0, 306.0, 98, index)
-                                                                                                : interest(myInterest.name, 200.0, 300.0, 111, index);
-                                              }).toList(),
-                                            ),
-                                          )
-                                    : SizedBoxResponsive(
-                                        height: 500,
-                                        width: width,
-                                        child: Stack(children: [
-                                          loadingInterest(24.0.w, 33.0.h),
-                                          loadingInterest(155.0.w, 0.0.h),
-                                          loadingInterest(242.0.w, 242.0.h),
-                                          loadingInterest(0.0.w, 181.0.h),
-                                          loadingInterest(256.0.w, 94.0.h),
-                                          loadingInterest(131.0.w, 152.0.h),
-                                          loadingInterest(107.0.w, 304.0.h)
-                                        ]),
+                                      width: width,
+                                      height: 280.h,
+                                      child: Center(
+                                        child: AutoSizeText(
+                                          'No Information Avilable',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize:
+                                              ScreenUtil().setSp(14),
+                                              fontFamily: 'helvetica',
+                                              fontWeight:
+                                              FontWeight.w500),
+                                        ),
                                       ),
-                              ),
-                            ),
-                          );
-                          //still trying to pull data
-                        }),
+                                    )
+                                        : SizedBoxResponsive(
+                                      height: 500,
+                                      width: provider
+                                          .passions.interests.length *
+                                          45.0,
+                                      child: Stack(
+                                        children: provider
+                                            .passions.interests
+                                            .map((myInterest) {
+                                          //find index of current interest
+                                          int index = provider
+                                              .passions.interests
+                                              .indexOf(myInterest);
+                                          // go throw all the interest, filter the index and inesrt it to the algorithim blow to
+                                          // keep the spaces and the sizes as in the XD
+                                          return
+                                            index == 0 || index == 11 + 1 || index == 23 + 1
+                                                ? interest(myInterest.name, 10.0, 40.0, 100, index) : index == 1 ||
+                                                index == 11 + 2 || index == 23 + 2
+
+                                                ? interest(myInterest.name, 20.0, 150.0, 120, index)
+                                                : index == 2 || index == 11 + 3 || index == 23 + 3
+
+                                                ? interest(myInterest.name, 0.0, 300.0, 103, index)
+                                                : index == 3 || index == 11 + 4 || index == 23 + 4
+
+                                                ? interest(myInterest.name, 140.0, 70.0, 120, index)
+                                                : index == 4 || index == 11 + 5 || index == 23 + 5
+
+                                                ? interest(myInterest.name, 160.0, 230.0, 110, index)
+                                                : index == 5 || index == 11 + 6 || index == 23 + 6
+
+                                                ? interest(myInterest.name, 130.0, 360.0, 111, index)
+                                                : index == 6 || index == 11 + 7 || index == 23 + 7
+
+                                                ? interest(myInterest.name, 260.0, 30.0,90, index)
+                                                : index == 7 || index == 11 + 8 || index == 23 + 8
+
+                                                ? interest(myInterest.name, 280.0, 150.0, 92, index)
+                                                : index == 8 || index == 11 + 9 || index == 23 + 9
+
+                                                ? interest(myInterest.name, 270.0, 320.0, 136, index)
+                                                : index == 9 || index == 11 + 10 || index == 23 + 10
+
+                                                ? interest(myInterest.name, 390.0, 20.0, 140, index)
+                                                : index == 10 || index == 11 + 11 || index == 23 + 11
+
+                                                ? interest(myInterest.name, 380.0, 186.0, 120, index)
+                                                : index == 11 || index == 11 + 12 || index == 23 + 12
+
+                                                ? interest(myInterest.name, 440.0, 306.0, 98, index)
+                                                : interest(myInterest.name, 200.0, 300.0, 111, index);
+                                        }).toList(),
+                                      ),
+                                    )
+                                        : SizedBoxResponsive(
+                                      height: 440,
+                                      width: width,
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                                width: 100,
+                                                height: 100,
+                                                child: CircularProgressIndicator(backgroundColor: Colors.white)
+                                            ),
+                                            SizedBox(height: 20,),
+                                            AutoSizeText(
+                                              'Please Wait',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: ScreenUtil().setSp(22),
+                                                  fontFamily: 'helvetica',
+                                                  fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                              //still trying to pull data
+                            }),
                       ],
                     ),
                     //to profile
@@ -306,11 +277,11 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
     final Animation<double> offsetAnimation = Tween(begin: 0.0, end: 24.0)
         .chain(CurveTween(curve: Curves.elasticIn))
         .animate(controller)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              controller.reverse();
-            }
-          });
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller.reverse();
+        }
+      });
     bool isSelected = Provider.of<PassionsProvider>(context, listen: true)
         .savedpassions
         .contains(text);
@@ -327,39 +298,66 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
           builder: (buildContext, child) {
             if (offsetAnimation.value < 0.0)
               print('${offsetAnimation.value + 8.0}');
-            return ClipRRect(
-              borderRadius: new BorderRadius.all(
-                Radius.circular(360),
-              ),
-              child: AnimatedContainer(
-                duration: Duration(seconds: 1),
-                width: ScreenUtil().setSp(size) * 1.0,
-                height: ScreenUtil().setSp(size) * 1.0,
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  gradient: isSelected
-                      ? LinearGradient(
-                          colors: [Color(0xff4B6FFF), Color(0xff0226B2)],
-                          begin: const FractionalOffset(0.5, 0.5),
-                          end: const FractionalOffset(0.5, 0.9),
-                          tileMode: TileMode.clamp)
-                      : LinearGradient(
-                          colors: [Color(0xff495896), Color(0xff495896)],
-                          begin: const FractionalOffset(0.5, 0.5),
-                          end: const FractionalOffset(0.5, 0.9),
-                          tileMode: TileMode.clamp),
+            return Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: new BorderRadius.all(
+                    Radius.circular(360),
+                  ),
+                  child: Container(
+                    width: ScreenUtil().setSp(size) * 1.0,
+                    height: ScreenUtil().setSp(size) * 1.0,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [Color(0xff00209B), Color(0xff4B82FF)],
+                            begin: Alignment.bottomCenter,
+                            end:Alignment.center,
+                            tileMode: TileMode.clamp)
+                    ),
+                    child: AutoSizeText(
+                      text,
+                      maxLines: 1,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: ScreenUtil().setSp(17),
+                          fontFamily: 'helvetica',
+                          fontWeight: FontWeight.w100),
+                    ),
+                  ),
                 ),
-                child: AutoSizeText(
-                  text,
-                  maxLines: 1,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: ScreenUtil().setSp(17),
-                      fontFamily: 'helvetica',
-                      fontWeight: FontWeight.w100),
+                ClipRRect(
+                  borderRadius: new BorderRadius.all(
+                    Radius.circular(360),
+                  ),
+                  child: AnimatedContainer(
+                      duration: Duration(milliseconds: 500),
+                      width: ScreenUtil().setSp(size) * 1.0,
+                      height: ScreenUtil().setSp(size) * 1.0,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          gradient: isSelected?
+                          LinearGradient(
+                              colors: [Colors.white, Colors.white70],
+                              begin: Alignment.bottomCenter,
+                              end:Alignment.center,
+                              tileMode: TileMode.clamp)
+                              :
+                          LinearGradient(
+                              colors: [Colors.transparent, Colors.transparent],
+                              begin: Alignment.bottomCenter,
+                              end:Alignment.center,
+                              tileMode: TileMode.clamp)
+                      ),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Icon(Icons.check,color: isSelected?Colors.white:Colors.transparent,),
+                      )
+                  ),
                 ),
-              ),
+              ],
             );
           },
         ),
@@ -380,7 +378,7 @@ class _PassionsState extends State<Passions> with TickerProviderStateMixin {
             height: 133,
             alignment: Alignment.center,
             decoration:
-                BoxDecoration(color: Color(0xff495896).withOpacity(0.4)),
+            BoxDecoration(color: Color(0xff495896).withOpacity(0.4)),
             child: CircularProgressIndicator()),
       ),
     );
